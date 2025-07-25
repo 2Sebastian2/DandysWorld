@@ -5,19 +5,18 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import net.seb234.dandysworld.dataholder.PlayerData;
 
+
 public class PlayerToon extends Actor {
 
     public String texture_name;
     public Texture texture;
     public final float speed = 200f;
 
-    public final int id;
+    public String id;
 
-    public PlayerToon(int id) {
+    public PlayerToon() {
         super();
-        this.id = id;
         this.texture_name = Outfit.defaultTexture();
-        setTexture();
         setScale(0.3f);
         setPosition(0, 0);
     }
@@ -46,5 +45,9 @@ public class PlayerToon extends Actor {
         setY(data.y);
         this.texture_name = data.texture_name;
         setTexture();
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 }

@@ -1,15 +1,21 @@
 package net.seb234.dandysworld.dataholder;
 
-import com.esotericsoftware.kryo.Kryo;
+import net.seb234.dandysworld.screens.GameScreen;
 
-import java.util.HashMap;
 public class NetUtils {
-    public static void registerClasses(Kryo kryo) {
-        kryo.register(GameData.class);
-        kryo.register(HashMap.class);
-        kryo.register(PlayerData.class);
-        kryo.register(Integer.class);
-        kryo.register(String.class);
+
+    private static int oldThread = 0;
+
+    @SuppressWarnings("DefaultLocale")
+    public static void threadHandler() {
+        if (Thread.activeCount() > oldThread) {
+            oldThread = Thread.activeCount();
+            if (oldThread > 10) {
+                GameScreen.console.error("ThreadHandler", String.format("Too Many Threads. Counting: %d", oldThread));
+            } else {
+                GameScreen.console.log("ThreadHandler", String.format("New Thread Detected. Counting: %d", oldThread));
+            }
+        }
     }
 }
 

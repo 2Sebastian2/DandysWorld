@@ -1,4 +1,4 @@
-package net.seb234.dandysworld;
+package net.seb234.dandysworld.screens;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
@@ -11,6 +11,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
+import net.seb234.dandysworld.MyGame;
 
 public class SelectScreen implements Screen {
     private final MyGame game;
@@ -40,7 +41,7 @@ public class SelectScreen implements Screen {
         hostButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                // Pasa a la pantalla principal como host
+                // Initialize Screen as Host
                 game.setScreen(new GameScreen(game, true));
             }
         });
@@ -48,7 +49,7 @@ public class SelectScreen implements Screen {
         clientButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                // Pasa a la pantalla principal como cliente
+                // Initialize Screen as Client
                 game.setScreen(new GameScreen(game, false));
             }
         });
@@ -70,5 +71,9 @@ public class SelectScreen implements Screen {
     @Override public void pause() {}
     @Override public void resume() {}
     @Override public void hide() {}
-    @Override public void dispose() { stage.dispose(); skin.dispose(); }
+    @Override public void dispose() {
+        stage.dispose();
+        skin.dispose();
+        game.dispose();
+    }
 }
