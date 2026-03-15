@@ -1,6 +1,6 @@
-import com.badlogic.gdx.ApplicationAdapter;
-
 package net.seb234.dandysworld;
+
+import com.badlogic.gdx.ApplicationAdapter;
 
 
 public class MainGame extends ApplicationAdapter {
