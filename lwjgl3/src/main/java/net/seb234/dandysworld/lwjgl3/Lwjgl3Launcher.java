@@ -3,7 +3,6 @@ package net.seb234.dandysworld.lwjgl3;
 import com.badlogic.gdx.backends.lwjgl3.Lwjgl3Application;
 import com.badlogic.gdx.backends.lwjgl3.Lwjgl3ApplicationConfiguration;
 import net.seb234.dandysworld.MainGame;
-import net.seb234.dandysworld.lwjgl3.StartupHelper;
 
 /** Launches the desktop (LWJGL3) application. */
 public class Lwjgl3Launcher {
