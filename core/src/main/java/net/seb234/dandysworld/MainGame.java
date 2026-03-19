@@ -2,6 +2,7 @@ package net.seb234.dandysworld;
 
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 
 
@@ -21,11 +22,11 @@ public class MainGame extends ApplicationAdapter {
 
     @Override
     public void render() {
-        // Game rendering code here
-        System.out.println("Rendering the game...");
-        // New Batch
-
+        
+        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+        
         stage.act(Gdx.graphics.getDeltaTime());
+
         stage.draw();
     }
 
@@ -33,5 +34,7 @@ public class MainGame extends ApplicationAdapter {
     public void dispose() {
         // Cleanup resources here
         System.out.println("Cleaning up & quit");
+        stage.dispose();
+        fox.dispose();
     }
 }
