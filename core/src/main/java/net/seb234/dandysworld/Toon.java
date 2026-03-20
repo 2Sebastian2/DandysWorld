@@ -35,7 +35,9 @@ public class Toon extends Actor {
 
     private float elapsedTime;
     private int lastKeyPressed = Keys.W; // Default to facing north
-    private Vector2 velocity;
+    private Vector2 velocity = new Vector2(0, 0);
+    private float speed = 100f; // Default walking speed
+    private float maxSpeed = 200f;
 
     public Toon(String toonId, String name) {
         super();
@@ -46,8 +48,6 @@ public class Toon extends Actor {
         this.toonId = toonId;
         this.toonPath = "textures/toons/" + this.toonId + "/";
 
-        this.velocity = new Vector2(0, 0);
-        
         this.walk = new Texture(this.toonPath + this.toonId + "_walk.png");
         TextureRegion[][] walkTmp = TextureRegion.split(this.walk, 32, 32);
 
@@ -92,33 +92,33 @@ public class Toon extends Actor {
     @Override
     public void draw(Batch batch, float parentAlpha) {
         TextureRegion currentFrame;
-        if (this.velocity.equals()) {
+        if (this.velocity.x == 0 && this.velocity.y > 0) {
 
-            if (this.velocity.x == )) {
+            if (this.velocity.x == 0 && this.velocity.y > 100) {
                 currentFrame = this.runN.getKeyFrame(elapsedTime);
             } else {
                 currentFrame = this.walkN.getKeyFrame(elapsedTime);
             }
 
-        } else if (Gdx.input.isKeyPressed(Keys.S)) {
+        } else if (this.velocity.x == 0 && this.velocity.y < 0) {
 
-            if (Gdx.input.isKeyPressed(Keys.SHIFT_LEFT)) {
+            if (this.velocity.x == 0 && this.velocity.y < -100) {
                 currentFrame = this.runS.getKeyFrame(elapsedTime);
             } else {
                 currentFrame = this.walkS.getKeyFrame(elapsedTime);
             }
 
-        } else if (Gdx.input.isKeyPressed(Keys.A)) {
+        } else if (this.velocity.x < 0) {
 
-            if (Gdx.input.isKeyPressed(Keys.SHIFT_LEFT)) {
+            if (this.velocity.x < -100) {
                 currentFrame = this.runW.getKeyFrame(elapsedTime);
             } else {
                 currentFrame = this.walkW.getKeyFrame(elapsedTime);
             }
 
-        } else if (Gdx.input.isKeyPressed(Keys.D)) {
+        } else if (this.velocity.x > 0) {
 
-            if (Gdx.input.isKeyPressed(Keys.SHIFT_LEFT)) {
+            if (this.velocity.x > 100) {
                 currentFrame = this.runE.getKeyFrame(elapsedTime);
             } else {
                 currentFrame = this.walkE.getKeyFrame(elapsedTime);
@@ -149,6 +149,10 @@ public class Toon extends Actor {
         this.velocity.set(x, y);
     }
 
+    public void addVelocity(float x, float y) {
+        this.velocity.add(x, y);
+    }
+
     public Vector2 getVelocity() {
         return this.velocity;
     }
@@ -161,37 +165,33 @@ public class Toon extends Actor {
     public void act(float delta) {
         super.act(delta);
         elapsedTime += delta;
+        this.setVelocity(0, 0);
+        
+        if (this.velocity.len() > 0) {
+            this.velocity.nor();
+        }
 
-        if (Gdx.input.isKeyPressed(com.badlogic.gdx.Input.Keys.W)) {
-            if (Gdx.input.isKeyPressed(Keys.SHIFT_LEFT)) {
-                this.setVelocity(0, 200);
-            } else {
-                this.setVelocity(0, 100);
-            }
+        float vel = this.speed;
+
+        if (Gdx.input.isKeyPressed(Keys.SHIFT_LEFT)) {
+            vel = this.maxSpeed;
+        }
+
+
+        if (Gdx.input.isKeyPressed(Keys.W)) {
+            this.addVelocity(0, vel);
             this.lastKeyPressed = Keys.W;
         }
-        if (Gdx.input.isKeyPressed(com.badlogic.gdx.Input.Keys.S)) {
-            if (Gdx.input.isKeyPressed(Keys.SHIFT_LEFT)) {
-                this.setVelocity(0, -200);
-            } else {
-                this.setVelocity(0, -100);
-            }
+        if (Gdx.input.isKeyPressed(Keys.S)) {
+            this.addVelocity(0, -vel);
             this.lastKeyPressed = Keys.S;
         }
         if (Gdx.input.isKeyPressed(com.badlogic.gdx.Input.Keys.A)) {
-            if (Gdx.input.isKeyPressed(Keys.SHIFT_LEFT)) {
-                this.setVelocity(-200, 0);
-            } else {
-                this.setVelocity(-100, 0);
-            }
+            this.addVelocity(-vel, 0);
             this.lastKeyPressed = Keys.A;
         }
         if (Gdx.input.isKeyPressed(com.badlogic.gdx.Input.Keys.D)) {
-            if (Gdx.input.isKeyPressed(Keys.SHIFT_LEFT)) {
-                this.setVelocity(200, 0);
-            } else {
-                this.setVelocity(100, 0);
-            }
+            this.addVelocity(vel, 0);
             this.lastKeyPressed = Keys.D;
 
         }
