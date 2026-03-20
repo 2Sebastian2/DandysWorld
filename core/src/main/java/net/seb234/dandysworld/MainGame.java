@@ -8,14 +8,14 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 
 public class MainGame extends ApplicationAdapter {
 
-    private Fox fox;
+    private Toon fox;
     private Stage stage;
 
     @Override
     public void create() {
         // Initialization code here
         System.out.println("Welcome to Dandy's World!");
-        fox = new Fox();
+        fox = new Toon("fox", "Fox");
         stage = new Stage();
         stage.addActor(fox);
     }
